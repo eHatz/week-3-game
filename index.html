@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Efthemios Hatzis Hangman Game</title>
+</head>
+<body> 
+
+	<script type="text/javascript">
+
+		var names = {
+			options: ['Stark', 'Stark1', 'Stark2', 'Stark3', 'Stark4', 'Stark5', 'Stark6'],
+			start: function(){
+				document.write('Press any key to get started!');
+			},
+			//picks a random name from the names.options array
+			pickRandom: function(x) {
+				return x[Math.floor(Math.random()*x.length)];
+			},
+			//takes the randomly chosen string and makes a string of equal length containing only "_ " 
+			blockAnswer: function() {
+				var word = this.pickRandom(this.options);
+				var blockWord = word;
+				for (var i = 0; i < word.length; i++) {
+					blockWord = blockWord.replace(word[i], '_ ');
+
+				}
+				return blockWord;
+			},
+			
+
+		}
+		names.start();
+		document.onkeyup = function(event) {
+			// Determines which exact key was selected. Make it lowercase
+			var userGuess = String.fromCharCode(event.keyCode).toLowerCase();
+			// Alerts with user guess
+		}
+		//var word = names.pickRandom(names.options);
+		//console.log(word);
+		var blah = names.blockAnswer();
+		document.write(blah);
+
+		
+	</script>
+
+</body>
+</html>

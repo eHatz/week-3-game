@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Efthemios Hatzis-Hangman</title>
+</head>
+<body>
+	<script type="text/javascript">
+
+		
+		var options = ['Stark','Targaryen','Bolton','Tyrell','Lannister','Arryn','Tully','Baratheon','Umber','Frey','Martell','Greyjoy', 'Karstark','Mormont'];
+
+		var word = options[Math.floor(Math.random()*options.length)];
+		var blankWord = word;
+		for (var i = 0; i < word.length; i++) {
+			blankWord = blankWord.replace(word[i], '_ ');
+		}
+		document.write(word);
+		document.write(blankWord);
+
+		document.onkeyup = function(event) {
+			
+			// Determines which exact key was selected. Make it lowercase
+			var userGuess = String.fromCharCode(event.keyCode).toLowerCase();
+			// Alerts with user guess
+			console.log(userGuess);
+			while (blankWord.indexOf('_') > -1){
+				if (word.toLowerCase().indexOf([userGuess]) > -1) {
+					document.write('yes');
+				}
+			}
+		}
+
+
+	</script>
+
+</body>
+</html>
