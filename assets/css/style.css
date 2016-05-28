@@ -1,0 +1,26 @@
+
+body {
+	background-color: #0b131d;
+}
+h1{
+	text-align: center;
+	color: white;
+}
+h2{
+	text-align: center;
+	color: white;
+}
+p{
+	text-align: center;
+	color: white;
+}
+#start{
+	text-align: center;
+	color: white;
+}
+img {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+
+}
