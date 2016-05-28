@@ -8,63 +8,59 @@
 	<script type="text/javascript">
 
 		var names = {
-			options: ['Stark', 'Stark1', 'Stark2', 'Stark3', 'Stark4', 'Stark5', 'Stark6'],
+			options: ['Starks', 'Martell', 'Greyjoy', 'Lannister', 'Karstark', 'Bolton'],
 			start: function(){
 				document.write('Press any key to get started!');
 			},
-			//picks a random name from the names.options array
-			pickRandom: function() {
-				return this.options[Math.floor(Math.random()*this.options.length)];
-			},
-			//takes the randomly chosen string and makes a string of equal length containing only "_ " 
-			blockAnswer: function() {
-				//pass in wrd arg
-				var word = this.pickRandom();
+			//makes an array of 2 items the first is a randomly picked word from the options array, the second is a string of "_" with the same length as the first 
+			blockAnswer: function() {	
+				var word = this.options[Math.floor(Math.random()*this.options.length)];
 				var blockWord = word;
 				for (var i = 0; i < word.length; i++) {
-					blockWord = blockWord.replace(word[i], '_');
-
+					blockWord = blockWord.replace(blockWord[i], i);
 				}
-				return blockWord;
+				var wordArray = [word, blockWord];
+				return wordArray;
 			}
 		}
 
-	
-		// Alerts with user guess
-		var pickRandom = names.pickRandom();
-		var blockAnswer = names.blockAnswer();
-		var reveal = blockAnswer;
-		var wrong = 0;
+		var wordArray = names.blockAnswer();
+		//the randomly picked word
+		var word = wordArray[0];
+		//the "_" version of the word
+		var wordBlocked = wordArray[1];
+		//will be used to create a string of positions for the letter selected
+		var iKeyPress = '';	
 
-		names.start();	
+		document.write(word);
 
 		document.onkeyup = function(event) {
 			// Determines which exact key was selected. Make it lowercase
 			var userGuess = String.fromCharCode(event.keyCode).toLowerCase();
-			//for (var i = 0; i < 12; i++) {
-				for (var index = 0; index < blockAnswer.length; index++) {
-					if (userGuess === pickRandom.toLowerCase()[index]) {
-						 reveal[index] = reveal.replace(reveal, userGuess);
-					} else {
-						wrong = wrong + 1;
-					}
 
-				
-				}	
-				document.write(pickRandom);
-					document.write(reveal);
-					document.write(wrong);
-			//}
+			
+					//searches the word for the letter pressed and puts the index of the letter in the string iKeyPress
+					for (var index = word.toLowerCase().indexOf(userGuess); index >= 0;){
+						iKeyPress = iKeyPress + index;
+						index = word.indexOf(userGuess, index + 1);
+
+						//takes the indexes stored in iKeyPress and switches the letters at that index in wordBlocked to the letters in word
+						for (var i = 0; i < iKeyPress.length; i++) {
+							var realI = iKeyPress[i]
+							console.log(realI);
+							wordBlocked = wordBlocked.replace(wordBlocked[realI], word[realI]);
+						}
+
+					
+
+					}
+					//resets the value of iKeyPress
+					iKeyPress = '';
+					console.log(wordBlocked);
+
 
 		}
-
-		if 
-		//var word = names.pickRandom(names.options);
-		//console.log(word);
-		var blah = names.blockAnswer();
-		document.write(blah);
-
-
+	// if (word.toLowerCase().indexOf(userGuess) > -1 && previousGuess.toLowerCase().indexOf(userGuess) === -1){
 
 		
 	</script>
