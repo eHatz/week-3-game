@@ -6,60 +6,66 @@
 <body> 
 
 	<script type="text/javascript">
-
+		var iKeyPress;	
+		var wordArray;
+		//the randomly picked word
+		var word;
+		//the "_" version of the word
+		var blockedWord = '';
+		//will be used to create a string of positions for the letter selected
 		var names = {
 			options: ['Starks', 'Martell', 'Greyjoy', 'Lannister', 'Karstark', 'Bolton'],
+
 			start: function(){
 				document.write('Press any key to get started!');
 			},
 			//makes an array of 2 items the first is a randomly picked word from the options array, the second is a string of "_" with the same length as the first 
 			blockAnswer: function() {	
-				var word = this.options[Math.floor(Math.random()*this.options.length)];
-				var blockWord = word;
+				word = this.options[Math.floor(Math.random()*this.options.length)];
 				for (var i = 0; i < word.length; i++) {
-					blockWord = blockWord.replace(blockWord[i], i);
+					blockedWord = blockedWord + i;
 				}
-				var wordArray = [word, blockWord];
-				return wordArray;
 			}
 		}
 
-		var wordArray = names.blockAnswer();
-		//the randomly picked word
-		var word = wordArray[0];
-		//the "_" version of the word
-		var wordBlocked = wordArray[1];
-		//will be used to create a string of positions for the letter selected
-		var iKeyPress = '';	
+		names.blockAnswer();
 
 		document.write(word);
+		blockedWord[2] = 'h';
 
 		document.onkeyup = function(event) {
 			// Determines which exact key was selected. Make it lowercase
 			var userGuess = String.fromCharCode(event.keyCode).toLowerCase();
 
-			
-					//searches the word for the letter pressed and puts the index of the letter in the string iKeyPress
-					for (var index = word.toLowerCase().indexOf(userGuess); index >= 0;){
-						iKeyPress = iKeyPress + index;
-						index = word.indexOf(userGuess, index + 1);
-
-						//takes the indexes stored in iKeyPress and switches the letters at that index in wordBlocked to the letters in word
-						for (var i = 0; i < iKeyPress.length; i++) {
-							var realI = iKeyPress[i]
-							console.log(realI);
-							wordBlocked = wordBlocked.replace(wordBlocked[realI], word[realI]);
-						}
-
-					
-
-					}
-					//resets the value of iKeyPress
-					iKeyPress = '';
-					console.log(wordBlocked);
-
-
+			//searches the word for the letter pressed and puts the index of the letter in the string iKeyPress
+			for (var i = 0; i < word.length; i++) {
+				
+				if (word[i].toLowerCase() == userGuess) {
+					blockedWord = blockedWord.replace(blockedWord[i], word[i]);
+					console.log(blockedWord);
+				}
+			}
 		}
+
+		// 	for (var index = word.toLowerCase().indexOf(userGuess); index >= 0;){
+		// 		iKeyPress = iKeyPress + index;
+		// 		index = word.indexOf(userGuess, index + 1);
+		// 	}
+		// 		//takes the indexes stored in iKeyPress and switches the letters at that index in blockedWord to the letters in word
+		// 		for (var i = 0; i < iKeyPress.length; i++) {
+		// 			var realI = iKeyPress[i]
+		// 			console.log(realI);
+		// 			blockedWord = blockedWord.replace(blockedWord[realI], word[realI]);
+		// 		}
+
+			
+		// 	//resets the value of iKeyPress
+		// 	iKeyPress = '';
+		// 	console.log(blockedWord);
+
+		// }
+
+
 	// if (word.toLowerCase().indexOf(userGuess) > -1 && previousGuess.toLowerCase().indexOf(userGuess) === -1){
 
 		
