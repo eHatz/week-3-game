@@ -22,6 +22,7 @@ var iKeyPress;
 			displayword: function(){
 				document.querySelector('#theWord').innerHTML = blockedWord;
 			},
+			//changes the image based on how many guesses are left
 			hangEm: function(){
 			    var image = document.querySelector("#hang");
 			    if (wrongGuess.length === 1) {
@@ -53,11 +54,12 @@ var iKeyPress;
 		names.displayword();
 
 		document.onkeyup = function(event) {
-			//switches the 'Press any Key to begin' string to an empty string
 			names.start();
 			// Determines which exact key was selected. Make it lowercase
 			var userGuess = String.fromCharCode(event.keyCode).toLowerCase();
-
+			//resets the amount of guesses remaining
+			document.querySelector('#guessR').innerHTML = 5 - wrongGuess.length;
+			
 			//searches the word for the letter pressed and puts the index of the letter in the string iKeyPress
 			if (word.toLowerCase().indexOf(userGuess) > -1 && previousGuess.toLowerCase().indexOf(userGuess) === -1 && wrongGuess.length < 5) {
 				for (var i = 0; i < word.length; i++) {
@@ -70,15 +72,17 @@ var iKeyPress;
 				names.guessedLetter();
 
 			}
+			// puts all values pressed in a string and displays them under the id guess
 			else if (previousGuess.toLowerCase().indexOf(userGuess) > -1 || wrongGuess.toLowerCase().indexOf(userGuess) > -1){
 				names.guessedLetter();
+			//if the user guess is not in the word
 			} else if (wrongGuess.length < 5){
 				wrongGuess = wrongGuess + userGuess;
 				names.guessedLetter();
 				names.hangEm();
-
+				document.querySelector('#guessR').innerHTML = 5 - wrongGuess.length;
 			}
-
+			//if the user did not guess the word
 			if (wrongGuess.length >= 5) {
 				lost++;
 				blockedWord = '';
@@ -90,6 +94,7 @@ var iKeyPress;
 				names.displayword();
 				document.querySelector('#guessed').innerHTML = " ";	
 			}
+			//if the user guessed the word
 			if (blockedWord.indexOf('_') === -1) {
 				won++;
 				blockedWord = '';
